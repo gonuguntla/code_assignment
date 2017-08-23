@@ -1,0 +1,12 @@
+Terminal1:
+
+copyApple = apple.dup
+require 'drb/drb'
+DRb.start_service('druby://localhost:8080', copyApple)
+DRb.thread.join #so thread wont exit immediatley or wont stop
+
+Terminal2:
+
+require 'drb/drb'
+DRb.start_service
+remoteCopyApple = DRbObject.new_with_uri('druby://localhost:8080')
